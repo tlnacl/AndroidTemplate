@@ -19,9 +19,11 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import nz.co.sush.simplelistdetail.network.RetrofitHelper;
+import nz.co.sush.simplelistdetail.network.ApiAdapter;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -29,6 +31,8 @@ import rx.schedulers.Schedulers;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    @Inject
+    ApiAdapter mApiAdapter;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.rv_events)
@@ -71,6 +75,8 @@ public class MainActivity extends AppCompatActivity
         mEventAdapter = new EventsAdapter();
         mRvEvents.setAdapter(mEventAdapter);
         mRvEvents.setLayoutManager(new LinearLayoutManager(this));
+
+        ((AndroidApplication)getApplication()).getApplicationComponent().inject(this);
     }
 
     @Override
@@ -79,7 +85,7 @@ public class MainActivity extends AppCompatActivity
 //        final int testValue = mPreferences.getInt("test",0);
 //        System.out.println("testValue" + testValue);
 //        crossview(mProgress, mRvEvents);
-        RetrofitHelper.getApiAdapter().getEventList()
+        mApiAdapter.getEventList()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Event>>() {
