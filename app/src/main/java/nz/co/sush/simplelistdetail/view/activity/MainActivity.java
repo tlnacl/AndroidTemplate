@@ -1,4 +1,4 @@
-package nz.co.sush.simplelistdetail;
+package nz.co.sush.simplelistdetail.view.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,20 +18,17 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import nz.co.sush.simplelistdetail.network.ApiAdapter;
+import nz.co.sush.simplelistdetail.Event;
+import nz.co.sush.simplelistdetail.EventsAdapter;
+import nz.co.sush.simplelistdetail.R;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    @Inject
-    ApiAdapter mApiAdapter;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.rv_events)
@@ -75,8 +71,6 @@ public class MainActivity extends AppCompatActivity
         mEventAdapter = new EventsAdapter();
         mRvEvents.setAdapter(mEventAdapter);
         mRvEvents.setLayoutManager(new LinearLayoutManager(this));
-
-        ((AndroidApplication)getApplication()).getApplicationComponent().inject(this);
     }
 
     @Override
