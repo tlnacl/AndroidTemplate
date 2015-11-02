@@ -1,6 +1,7 @@
 package nz.co.sush.simplelistdetail.di.components;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import javax.inject.Singleton;
 
@@ -21,6 +22,7 @@ public interface ApplicationComponent {
 
     //Exposed to sub-graphs.
     Context context();
+    SharedPreferences preferences();
 
     ThreadExecutor threadExecutor();
 
