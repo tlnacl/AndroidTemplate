@@ -27,13 +27,12 @@ import nz.co.sush.simplelistdetail.Event;
 import nz.co.sush.simplelistdetail.EventsAdapter;
 import nz.co.sush.simplelistdetail.R;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by tomtang on 2/11/15.
  */
-public class EventsActivity extends BaseActivity
+public class EventListActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -52,7 +51,7 @@ public class EventsActivity extends BaseActivity
     private EventsAdapter mEventAdapter;
 
     public static Intent getCallingIntent(Context context) {
-        return new Intent(context, EventsActivity.class);
+        return new Intent(context, EventListActivity.class);
     }
 
     @Override
@@ -100,8 +99,10 @@ public class EventsActivity extends BaseActivity
     private void loadEvents() {
         crossview(mProgress, mRvEvents);
         mApiAdapter.getEventList()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.from(mJobExecutor))
+                .observeOn(mUIThread.getScheduler())
                 .subscribe(new Subscriber<List<Event>>() {
                     @Override
                     public void onCompleted() {

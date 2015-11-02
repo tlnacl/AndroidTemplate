@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import javax.inject.Inject;
 
 import nz.co.sush.simplelistdetail.AndroidApplication;
+import nz.co.sush.simplelistdetail.PostExecutionThread;
+import nz.co.sush.simplelistdetail.ThreadExecutor;
 import nz.co.sush.simplelistdetail.di.components.ApplicationComponent;
 import nz.co.sush.simplelistdetail.network.ApiAdapter;
 import nz.co.sush.simplelistdetail.view.navigation.Navigator;
@@ -21,6 +23,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     SharedPreferences mSharedPreferences;
     @Inject
     Navigator mNavigator;
+    @Inject
+    ThreadExecutor mJobExecutor;
+    @Inject
+    PostExecutionThread mUIThread;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

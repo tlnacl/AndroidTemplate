@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import nz.co.sush.simplelistdetail.view.activity.EventDetailActivity;
-import nz.co.sush.simplelistdetail.view.activity.EventsActivity;
+import nz.co.sush.simplelistdetail.view.activity.EventListActivity;
 
 /**
  * Class used to navigate through the application.
@@ -25,7 +25,7 @@ public class Navigator {
     }
 
     public void navigateToEventList(Context context){
-        Intent intentToLaunch = EventsActivity.getCallingIntent(context);
+        Intent intentToLaunch = EventListActivity.getCallingIntent(context);
         context.startActivity(intentToLaunch);
     }
 
