@@ -1,7 +1,7 @@
-package nz.co.sush.simplelistdetail.view.navigation;
+package nz.co.sush.simplelistdetail.view;
 
 /**
- * Created by tomtang on 2/11/15.
+ * Created by tomtang on 3/11/15.
  */
 
 import android.content.Context;

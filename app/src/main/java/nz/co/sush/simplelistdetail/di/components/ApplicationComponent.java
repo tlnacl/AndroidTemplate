@@ -10,6 +10,7 @@ import nz.co.sush.simplelistdetail.PostExecutionThread;
 import nz.co.sush.simplelistdetail.ThreadExecutor;
 import nz.co.sush.simplelistdetail.di.modules.ApplicationModule;
 import nz.co.sush.simplelistdetail.di.modules.NetworkModule;
+import nz.co.sush.simplelistdetail.network.ApiAdapter;
 import nz.co.sush.simplelistdetail.view.activity.BaseActivity;
 
 /**
@@ -27,4 +28,6 @@ public interface ApplicationComponent {
     ThreadExecutor threadExecutor();
 
     PostExecutionThread postExecutionThread();
+
+    ApiAdapter apiAdapter();
 }

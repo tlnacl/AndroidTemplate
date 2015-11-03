@@ -1,12 +1,62 @@
 package nz.co.sush.simplelistdetail.presentation;
 
+import java.util.List;
+
+import nz.co.sush.simplelistdetail.Event;
+import nz.co.sush.simplelistdetail.PostExecutionThread;
+import nz.co.sush.simplelistdetail.ThreadExecutor;
+import nz.co.sush.simplelistdetail.network.ApiAdapter;
+import nz.co.sush.simplelistdetail.view.EventListView;
+import nz.co.sush.simplelistdetail.view.IView;
+import rx.Subscriber;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by tomtang on 2/11/15.
  */
-public class EventListPresenter implements Presenter{
+public class EventListPresenter implements Presenter {
 
-    public void loadEvents(){
+    private ApiAdapter mApiAdapter;
+    private ThreadExecutor mJobExecutor;
+    private PostExecutionThread mUIThread;
+    private EventListView mEventListView;
 
+    public EventListPresenter(ApiAdapter apiAdapter, ThreadExecutor jobExecutor, PostExecutionThread UIThread) {
+        mApiAdapter = apiAdapter;
+        mJobExecutor = jobExecutor;
+        mUIThread = UIThread;
+    }
+
+    public void loadEvents() {
+        mEventListView.showLoading();
+        mApiAdapter.getEventList()
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.from(mJobExecutor))
+                .observeOn(mUIThread.getScheduler())
+                .subscribe(new Subscriber<List<Event>>() {
+                    @Override
+                    public void onCompleted() {
+                        mEventListView.hideLoading();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mEventListView.hideLoading();
+                        mEventListView.showRetry();
+                    }
+
+                    @Override
+                    public void onNext(List<Event> events) {
+                        mEventListView.hideLoading();
+                        mEventListView.renderEventList(events);
+                    }
+                });
+    }
+
+    @Override
+    public void setView(IView view) {
+        mEventListView = (EventListView) view;
     }
 
     @Override
@@ -23,4 +73,5 @@ public class EventListPresenter implements Presenter{
     public void destroy() {
 
     }
+
 }

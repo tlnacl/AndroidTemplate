@@ -13,7 +13,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //TODO
-        final boolean isLogin = mSharedPreferences.getBoolean(LOGIN_STATUS,false);
+//        final boolean isLogin = mSharedPreferences.getBoolean(LOGIN_STATUS,false);
         mNavigator.navigateToEventList(this);
     }
 }

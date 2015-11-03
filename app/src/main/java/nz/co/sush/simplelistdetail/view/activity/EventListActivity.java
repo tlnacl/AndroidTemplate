@@ -26,14 +26,14 @@ import butterknife.OnClick;
 import nz.co.sush.simplelistdetail.Event;
 import nz.co.sush.simplelistdetail.EventsAdapter;
 import nz.co.sush.simplelistdetail.R;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
+import nz.co.sush.simplelistdetail.presentation.EventListPresenter;
+import nz.co.sush.simplelistdetail.view.EventListView;
 
 /**
  * Created by tomtang on 2/11/15.
  */
 public class EventListActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements EventListView,NavigationView.OnNavigationItemSelectedListener {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.rv_events)
@@ -49,6 +49,7 @@ public class EventListActivity extends BaseActivity
     @Bind(R.id.retry)
     Button mRetry;
     private EventsAdapter mEventAdapter;
+    private EventListPresenter mEventListPresenter;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, EventListActivity.class);
@@ -81,6 +82,13 @@ public class EventListActivity extends BaseActivity
         mRvEvents.setAdapter(mEventAdapter);
         mRvEvents.setLayoutManager(new LinearLayoutManager(this));
 
+        initialize();
+    }
+
+    private void initialize() {
+        //TODO Using DI to replace
+        mEventListPresenter = new EventListPresenter(mApiAdapter,mJobExecutor,mUIThread);
+        mEventListPresenter.setView(this);
     }
 
     @OnClick(R.id.retry)
@@ -91,38 +99,12 @@ public class EventListActivity extends BaseActivity
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-//        final int testValue = mPreferences.getInt("test",0);
-//        System.out.println("testValue" + testValue);
         loadEvents();
     }
 
     private void loadEvents() {
-        crossview(mProgress, mRvEvents);
-        mApiAdapter.getEventList()
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.from(mJobExecutor))
-                .observeOn(mUIThread.getScheduler())
-                .subscribe(new Subscriber<List<Event>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        //show retry
-                        crossview(mRetry, mProgress);
-                    }
-
-                    @Override
-                    public void onNext(List<Event> events) {
-                        mEventAdapter.setEvents(events);
-                        crossview(mRvEvents, mProgress);
-                    }
-                });
+        mEventListPresenter.loadEvents();
     }
-
 
     private static void crossview(View showView, View hideView) {
         hideView.setVisibility(View.GONE);
@@ -184,5 +166,39 @@ public class EventListActivity extends BaseActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void renderEventList(List<Event> eventList) {
+        mEventAdapter.setEvents(eventList);
+    }
+
+    @Override
+    public void showLoading() {
+        mProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        mProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showRetry() {
+        mRetry.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideRetry() {
+        mRetry.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showError(String message) {
+    }
+
+    @Override
+    public Context getContext() {
+        return null;
     }
 }

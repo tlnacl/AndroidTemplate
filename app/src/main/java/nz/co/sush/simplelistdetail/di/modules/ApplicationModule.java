@@ -13,7 +13,7 @@ import nz.co.sush.simplelistdetail.JobExecutor;
 import nz.co.sush.simplelistdetail.PostExecutionThread;
 import nz.co.sush.simplelistdetail.ThreadExecutor;
 import nz.co.sush.simplelistdetail.UIThread;
-import nz.co.sush.simplelistdetail.view.navigation.Navigator;
+import nz.co.sush.simplelistdetail.view.Navigator;
 
 /**
  * Created by tomtang on 2/11/15.

@@ -11,7 +11,7 @@ import nz.co.sush.simplelistdetail.PostExecutionThread;
 import nz.co.sush.simplelistdetail.ThreadExecutor;
 import nz.co.sush.simplelistdetail.di.components.ApplicationComponent;
 import nz.co.sush.simplelistdetail.network.ApiAdapter;
-import nz.co.sush.simplelistdetail.view.navigation.Navigator;
+import nz.co.sush.simplelistdetail.view.Navigator;
 
 /**
  * Created by tomtang on 2/11/15.
