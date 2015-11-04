@@ -22,6 +22,7 @@ import butterknife.OnClick;
 import nz.co.sush.simplelistdetail.Event;
 import nz.co.sush.simplelistdetail.EventsAdapter;
 import nz.co.sush.simplelistdetail.R;
+import nz.co.sush.simplelistdetail.di.components.EventComponent;
 import nz.co.sush.simplelistdetail.presentation.EventListPresenter;
 import nz.co.sush.simplelistdetail.view.EventListView;
 
@@ -45,7 +46,7 @@ public class EventListFragment extends BaseFragment implements EventListView{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_events, container, false);
-        ButterKnife.bind(v);
+        ButterKnife.bind(this,v);
         return v;
     }
 
@@ -74,6 +75,7 @@ public class EventListFragment extends BaseFragment implements EventListView{
 
     private void initialize() {
         //TODO Using DI to replace
+        getComponent(EventComponent.class).inject(this);
         mEventListPresenter.setView(this);
     }
 

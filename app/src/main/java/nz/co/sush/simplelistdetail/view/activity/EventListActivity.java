@@ -15,18 +15,22 @@ import android.view.View;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import nz.co.sush.simplelistdetail.R;
+import nz.co.sush.simplelistdetail.di.HasComponent;
+import nz.co.sush.simplelistdetail.di.components.DaggerEventComponent;
+import nz.co.sush.simplelistdetail.di.components.EventComponent;
 
 /**
  * Created by tomtang on 2/11/15.
  */
 public class EventListActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, HasComponent<EventComponent> {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.nav_view)
     NavigationView mNavView;
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
+    private EventComponent eventComponent;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, EventListActivity.class);
@@ -47,7 +51,7 @@ public class EventListActivity extends BaseActivity
 
         mNavView.setNavigationItemSelectedListener(this);
 
-
+        initializeInjector();
     }
 
     private static void crossview(View showView, View hideView) {
@@ -110,5 +114,17 @@ public class EventListActivity extends BaseActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void initializeInjector() {
+        this.eventComponent = DaggerEventComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .build();
+    }
+
+    @Override
+    public EventComponent getComponent() {
+        return eventComponent;
     }
 }
