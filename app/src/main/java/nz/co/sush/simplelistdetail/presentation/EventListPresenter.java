@@ -39,7 +39,7 @@ public class EventListPresenter implements Presenter {
         mSubscription = mApiAdapter.getEventList()
 //                .subscribeOn(Schedulers.newThread())
 //                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.from(mJobExecutor))
+                .subscribeOn(Schedulers.io())
                 .observeOn(mUIThread.getScheduler())
                 .subscribe(new Subscriber<List<Event>>() {
                     @Override
