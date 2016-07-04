@@ -22,7 +22,7 @@ import com.plattysoft.leonids.ParticleSystem;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import nz.co.sush.simplelistdetail.network.RetrofitHelper;
@@ -33,22 +33,22 @@ import rx.schedulers.Schedulers;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.rv_events)
+    @BindView(R.id.rv_events)
     RecyclerView mRvEvents;
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton mFab;
-    @Bind(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView mNavView;
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    @Bind(R.id.progress)
+    @BindView(R.id.progress)
     ProgressBar mProgress;
-    @Bind(R.id.retry)
+    @BindView(R.id.retry)
     Button mRetry;
 
-    @Bind(R.id.particle)
+    @BindView(R.id.particle)
     ImageView particle;
     private EventsAdapter mEventAdapter;
 
