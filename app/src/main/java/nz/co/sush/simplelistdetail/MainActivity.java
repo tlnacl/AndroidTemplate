@@ -15,12 +15,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+
+import com.plattysoft.leonids.ParticleSystem;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import nz.co.sush.simplelistdetail.network.RetrofitHelper;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -43,6 +47,9 @@ public class MainActivity extends AppCompatActivity
     ProgressBar mProgress;
     @Bind(R.id.retry)
     Button mRetry;
+
+    @Bind(R.id.particle)
+    ImageView particle;
     private EventsAdapter mEventAdapter;
 
     @Override
@@ -53,13 +60,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -71,6 +71,19 @@ public class MainActivity extends AppCompatActivity
         mEventAdapter = new EventsAdapter();
         mRvEvents.setAdapter(mEventAdapter);
         mRvEvents.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @OnClick(R.id.particle)
+    void onFabClick(View view){
+        doParticleAnimation();
+        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+    }
+
+    private void doParticleAnimation() {
+        new ParticleSystem(this,10,R.drawable.ic_menu_camera,1000)
+                .setSpeedRange(0.2f,0.5f)
+                .oneShot(particle,10);
     }
 
     @Override

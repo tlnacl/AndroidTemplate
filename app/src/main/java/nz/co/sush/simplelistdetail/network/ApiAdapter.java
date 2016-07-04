@@ -3,7 +3,7 @@ package nz.co.sush.simplelistdetail.network;
 import java.util.List;
 
 import nz.co.sush.simplelistdetail.Event;
-import retrofit.http.GET;
+import retrofit2.http.GET;
 import rx.Observable;
 
 /**
