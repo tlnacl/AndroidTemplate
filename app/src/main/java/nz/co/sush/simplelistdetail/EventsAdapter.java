@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -45,7 +45,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolde
     }
 
     public class EventHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.event_id)
+        @BindView(R.id.event_id)
         TextView eventId;
 
         public EventHolder(View itemView) {
