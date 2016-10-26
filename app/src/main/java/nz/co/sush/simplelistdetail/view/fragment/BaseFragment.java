@@ -4,8 +4,6 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import nz.co.sush.simplelistdetail.di.HasComponent;
-
 /**
  * Created by tomtang on 2/11/15.
  */
@@ -22,13 +20,5 @@ public abstract class BaseFragment extends Fragment {
      */
     protected void showToastMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * Gets a component for dependency injection by its type.
-     */
-    @SuppressWarnings("unchecked")
-    protected <C> C getComponent(Class<C> componentType) {
-        return componentType.cast(((HasComponent<C>)getActivity()).getComponent());
     }
 }

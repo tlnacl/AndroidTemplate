@@ -11,17 +11,16 @@ import nz.co.sush.simplelistdetail.ThreadExecutor;
 import nz.co.sush.simplelistdetail.di.modules.ApplicationModule;
 import nz.co.sush.simplelistdetail.di.modules.NetworkModule;
 import nz.co.sush.simplelistdetail.network.ApiAdapter;
-import nz.co.sush.simplelistdetail.view.activity.BaseActivity;
+import nz.co.sush.simplelistdetail.view.activity.MainActivity;
 
 /**
- * Created by tomtang on 2/11/15.
+ * Created by tom.t on 26/10/16.
  */
 @Singleton // Constraints this component to one-per-application or unscoped bindings.
 @Component(modules = {ApplicationModule.class, NetworkModule.class})
-public interface ApplicationComponent {
-    void inject(BaseActivity activity);
+public interface AppComponent {
+    void inject(MainActivity mainActivity);
 
-    //Exposed to sub-graphs.
     Context context();
     SharedPreferences preferences();
 

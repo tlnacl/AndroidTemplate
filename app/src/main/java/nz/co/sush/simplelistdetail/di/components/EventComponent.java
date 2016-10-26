@@ -2,14 +2,13 @@ package nz.co.sush.simplelistdetail.di.components;
 
 import dagger.Component;
 import nz.co.sush.simplelistdetail.di.PerActivity;
-import nz.co.sush.simplelistdetail.di.modules.ActivityModule;
 import nz.co.sush.simplelistdetail.view.fragment.EventListFragment;
 
 /**
- * Created by tomtang on 3/11/15.
+ * Created by tom.t on 26/10/16.
  */
 @PerActivity
-@Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
-public interface EventComponent extends ActivityComponent{
-    void inject(EventListFragment fragment);
+@Component(dependencies = {AppComponent.class})
+public interface EventComponent {
+    void inject(EventListFragment eventListFragment);
 }

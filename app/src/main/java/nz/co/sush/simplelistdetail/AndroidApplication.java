@@ -2,15 +2,15 @@ package nz.co.sush.simplelistdetail;
 
 import android.app.Application;
 
-import nz.co.sush.simplelistdetail.di.components.ApplicationComponent;
-import nz.co.sush.simplelistdetail.di.components.DaggerApplicationComponent;
+import nz.co.sush.simplelistdetail.di.components.AppComponent;
+import nz.co.sush.simplelistdetail.di.components.DaggerAppComponent;
 import nz.co.sush.simplelistdetail.di.modules.ApplicationModule;
 
 /**
  * Created by tomtang on 2/11/15.
  */
 public class AndroidApplication extends Application {
-    private ApplicationComponent applicationComponent;
+    private static AppComponent appComponent;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -18,12 +18,12 @@ public class AndroidApplication extends Application {
     }
 
     private void initializeInjector() {
-        this.applicationComponent = DaggerApplicationComponent.builder()
+        appComponent = DaggerAppComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
     }
 
-    public ApplicationComponent getApplicationComponent() {
-        return this.applicationComponent;
+    public static AppComponent getAppComponent() {
+        return appComponent;
     }
 }
