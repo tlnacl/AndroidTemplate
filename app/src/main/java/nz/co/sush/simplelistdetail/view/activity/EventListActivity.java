@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import nz.co.sush.simplelistdetail.R;
 import nz.co.sush.simplelistdetail.di.components.AppComponent;
 
@@ -21,11 +21,11 @@ import nz.co.sush.simplelistdetail.di.components.AppComponent;
  */
 public class EventListActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView mNavView;
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
     public static Intent getCallingIntent(Context context) {

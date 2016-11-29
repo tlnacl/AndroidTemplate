@@ -3,7 +3,6 @@ package nz.co.sush.simplelistdetail.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,28 +15,27 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import nz.co.sush.simplelistdetail.AndroidApplication;
-import nz.co.sush.simplelistdetail.Event;
-import nz.co.sush.simplelistdetail.EventsAdapter;
 import nz.co.sush.simplelistdetail.R;
 import nz.co.sush.simplelistdetail.di.components.DaggerEventComponent;
+import nz.co.sush.simplelistdetail.network.model.Event;
 import nz.co.sush.simplelistdetail.presentation.EventListPresenter;
 import nz.co.sush.simplelistdetail.view.EventListView;
+import nz.co.sush.simplelistdetail.view.adapter.EventsAdapter;
 
 /**
  * Created by tomtang on 3/11/15.
  */
 public class EventListFragment extends BaseFragment implements EventListView{
-    @Bind(R.id.rv_events)
+    @BindView(R.id.rv_events)
     RecyclerView mRvEvents;
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton mFab;
-    @Bind(R.id.progress)
+    @BindView(R.id.progress)
     ProgressBar mProgress;
-    @Bind(R.id.retry)
+    @BindView(R.id.retry)
     Button mRetry;
     private EventsAdapter mEventAdapter;
     @Inject
@@ -47,20 +45,20 @@ public class EventListFragment extends BaseFragment implements EventListView{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_events, container, false);
-        ButterKnife.bind(this,v);
         return v;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mEventListPresenter.destroy();
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        mFab.setOnClickListener(view1 -> Snackbar.make(view1, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show());
 
         mEventAdapter = new EventsAdapter();
         mRvEvents.setAdapter(mEventAdapter);

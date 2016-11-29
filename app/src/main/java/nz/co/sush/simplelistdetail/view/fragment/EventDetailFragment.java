@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import nz.co.sush.simplelistdetail.R;
 
@@ -15,9 +15,9 @@ import nz.co.sush.simplelistdetail.R;
  * Created by tomtang on 5/11/15.
  */
 public class EventDetailFragment extends BaseFragment {
-    @Bind(R.id.event_type)
+    @BindView(R.id.event_type)
     TextView mEventType;
-    @Bind(R.id.is_public)
+    @BindView(R.id.is_public)
     TextView mIsPublic;
 
     @Nullable
@@ -32,11 +32,5 @@ public class EventDetailFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }

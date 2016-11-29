@@ -4,15 +4,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import nz.co.sush.simplelistdetail.Event;
-import nz.co.sush.simplelistdetail.PostExecutionThread;
-import nz.co.sush.simplelistdetail.ThreadExecutor;
+import nz.co.sush.simplelistdetail.network.model.Event;
 import nz.co.sush.simplelistdetail.di.PerActivity;
 import nz.co.sush.simplelistdetail.network.ApiAdapter;
 import nz.co.sush.simplelistdetail.view.EventListView;
 import nz.co.sush.simplelistdetail.view.IView;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -22,25 +21,19 @@ import rx.schedulers.Schedulers;
 public class EventListPresenter implements Presenter {
 
     private ApiAdapter mApiAdapter;
-    private ThreadExecutor mJobExecutor;
-    private PostExecutionThread mUIThread;
     private EventListView mEventListView;
     private Subscription mSubscription;
 
     @Inject
-    public EventListPresenter(ApiAdapter apiAdapter, ThreadExecutor jobExecutor, PostExecutionThread UIThread) {
+    public EventListPresenter(ApiAdapter apiAdapter) {
         mApiAdapter = apiAdapter;
-        mJobExecutor = jobExecutor;
-        mUIThread = UIThread;
     }
 
     public void loadEvents() {
         mEventListView.showLoading();
         mSubscription = mApiAdapter.getEventList()
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .observeOn(mUIThread.getScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Event>>() {
                     @Override
                     public void onCompleted() {

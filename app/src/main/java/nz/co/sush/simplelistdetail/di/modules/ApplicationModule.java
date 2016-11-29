@@ -9,10 +9,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import nz.co.sush.simplelistdetail.AndroidApplication;
-import nz.co.sush.simplelistdetail.JobExecutor;
-import nz.co.sush.simplelistdetail.PostExecutionThread;
-import nz.co.sush.simplelistdetail.ThreadExecutor;
-import nz.co.sush.simplelistdetail.UIThread;
 import nz.co.sush.simplelistdetail.view.Navigator;
 
 /**
@@ -43,16 +39,4 @@ public class ApplicationModule {
     Navigator provideNavigator(){
         return new Navigator();
     }
-
-    @Provides @Singleton
-    ThreadExecutor provideThreadExecutor(JobExecutor jobExecutor) {
-        return jobExecutor;
-    }
-
-    @Provides @Singleton
-    PostExecutionThread providePostExecutionThread(UIThread uiThread) {
-        return uiThread;
-    }
-
-
 }

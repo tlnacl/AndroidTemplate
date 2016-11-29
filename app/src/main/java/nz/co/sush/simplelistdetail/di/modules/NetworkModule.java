@@ -1,11 +1,19 @@
 package nz.co.sush.simplelistdetail.di.modules;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import nz.co.sush.simplelistdetail.MyAdapterFactory;
 import nz.co.sush.simplelistdetail.network.ApiAdapter;
-import retrofit.RestAdapter;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by tomtang on 2/11/15.
@@ -17,9 +25,19 @@ public class NetworkModule {
     @Provides
     @Singleton
     ApiAdapter provideApiAdapter(){
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(END_POINT)
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
-        return restAdapter.create(ApiAdapter.class);
+
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapterFactory(MyAdapterFactory.create())
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(END_POINT)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(okHttpClient)
+                .build();
+        return retrofit.create(ApiAdapter.class);
     }
 }

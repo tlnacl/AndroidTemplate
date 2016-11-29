@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import nz.co.sush.simplelistdetail.PostExecutionThread;
-import nz.co.sush.simplelistdetail.ThreadExecutor;
 import nz.co.sush.simplelistdetail.di.modules.ApplicationModule;
 import nz.co.sush.simplelistdetail.di.modules.NetworkModule;
 import nz.co.sush.simplelistdetail.network.ApiAdapter;
@@ -23,10 +21,6 @@ public interface AppComponent {
 
     Context context();
     SharedPreferences preferences();
-
-    ThreadExecutor threadExecutor();
-
-    PostExecutionThread postExecutionThread();
 
     ApiAdapter apiAdapter();
 }

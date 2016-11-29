@@ -2,7 +2,7 @@ package nz.co.sush.simplelistdetail.view;
 
 import java.util.List;
 
-import nz.co.sush.simplelistdetail.Event;
+import nz.co.sush.simplelistdetail.network.model.Event;
 
 /**
  * Created by tomtang on 2/11/15.

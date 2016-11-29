@@ -1,4 +1,4 @@
-package nz.co.sush.simplelistdetail;
+package nz.co.sush.simplelistdetail.view.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,8 +9,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import nz.co.sush.simplelistdetail.R;
+import nz.co.sush.simplelistdetail.network.model.Event;
 
 /**
  * Created by tomtang on 30/10/15.
@@ -45,7 +47,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolde
     }
 
     public class EventHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.event_id)
+        @BindView(R.id.event_id)
         TextView eventId;
 
         public EventHolder(View itemView) {
@@ -54,7 +56,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolde
         }
 
         public void bind(Event event) {
-            eventId.setText(String.valueOf(event.getId()));
+            eventId.setText(String.valueOf(event.id()));
         }
     }
 }
