@@ -1,5 +1,6 @@
 package nz.co.sush.simplelistdetail.di.modules;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -28,6 +29,7 @@ public class NetworkModule {
     ApiAdapter provideApiAdapter(){
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .addNetworkInterceptor(new StethoInterceptor())
                 .build();
 
         Gson gson = new GsonBuilder()

@@ -10,6 +10,7 @@ import android.content.Intent;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import nz.co.sush.simplelistdetail.network.model.Event;
 import nz.co.sush.simplelistdetail.view.activity.EventDetailActivity;
 import nz.co.sush.simplelistdetail.view.activity.EventListActivity;
 
@@ -29,8 +30,8 @@ public class Navigator {
         context.startActivity(intentToLaunch);
     }
 
-    public void navigateToEventDetail(Context context) {
-        Intent intentToLaunch = EventDetailActivity.getCallingIntent(context);
+    public void navigateToEventDetail(Context context, Event event) {
+        Intent intentToLaunch = EventDetailActivity.getCallingIntent(context,event);
         context.startActivity(intentToLaunch);
     }
 }

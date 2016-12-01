@@ -2,6 +2,8 @@ package nz.co.sush.simplelistdetail;
 
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
+
 import nz.co.sush.simplelistdetail.di.components.AppComponent;
 import nz.co.sush.simplelistdetail.di.components.DaggerAppComponent;
 import nz.co.sush.simplelistdetail.di.modules.ApplicationModule;
@@ -15,6 +17,7 @@ public class AndroidApplication extends Application {
     @Override public void onCreate() {
         super.onCreate();
         this.initializeInjector();
+        Stetho.initializeWithDefaults(this);
     }
 
     private void initializeInjector() {

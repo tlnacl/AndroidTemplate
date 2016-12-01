@@ -23,12 +23,13 @@ import nz.co.sush.simplelistdetail.di.components.DaggerEventComponent;
 import nz.co.sush.simplelistdetail.network.model.Event;
 import nz.co.sush.simplelistdetail.presentation.EventListPresenter;
 import nz.co.sush.simplelistdetail.view.EventListView;
+import nz.co.sush.simplelistdetail.view.activity.EventDetailActivity;
 import nz.co.sush.simplelistdetail.view.adapter.EventsAdapter;
 
 /**
  * Created by tomtang on 3/11/15.
  */
-public class EventListFragment extends BaseFragment implements EventListView{
+public class EventListFragment extends BaseFragment implements EventListView, EventsAdapter.Callback {
     @BindView(R.id.rv_events)
     RecyclerView mRvEvents;
     @BindView(R.id.fab)
@@ -60,7 +61,7 @@ public class EventListFragment extends BaseFragment implements EventListView{
 //        mFab.setOnClickListener(view1 -> Snackbar.make(view1, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show());
 
-        mEventAdapter = new EventsAdapter();
+        mEventAdapter = new EventsAdapter(this);
         mRvEvents.setAdapter(mEventAdapter);
         mRvEvents.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -115,5 +116,10 @@ public class EventListFragment extends BaseFragment implements EventListView{
 
     @Override
     public void showError(String message) {
+    }
+
+    @Override
+    public void onItemClick(Event event) {
+        startActivity(EventDetailActivity.getCallingIntent(getActivity(),event));
     }
 }
