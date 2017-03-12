@@ -1,5 +1,6 @@
-package nz.co.sush.simplelistdetail;
+package nz.co.sush.simplelistdetail.view.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import nz.co.sush.simplelistdetail.R;
+import nz.co.sush.simplelistdetail.network.model.Event;
 
 /**
  * Created by tomtang on 30/10/15.
@@ -18,9 +21,11 @@ import butterknife.ButterKnife;
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolder> {
 
     private List<Event> mEventList;
+    private Callback callback;
 
-    public EventsAdapter() {
+    public EventsAdapter(Callback callback) {
         mEventList = new ArrayList<>();
+        this.callback = callback;
     }
 
     public void setEvents(List<Event> eventList) {
@@ -30,7 +35,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolde
 
     @Override
     public EventHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_event, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_event, parent, false);
         return new EventHolder(v);
     }
 
@@ -47,14 +52,26 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventHolde
     public class EventHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.event_id)
         TextView eventId;
+        @BindView(R.id.actor)
+        TextView actor;
+        @BindView(R.id.event_item_layout)
+        View itemLayout;
+        Context context;
 
         public EventHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            context = itemView.getContext();
         }
 
         public void bind(Event event) {
-            eventId.setText(String.valueOf(event.getId()));
+            eventId.setText(context.getString(R.string.event_id,event.id()));
+            actor.setText(context.getString(R.string.event_actor,event.actor().displayLogin()));
+            itemLayout.setOnClickListener(view -> callback.onItemClick(event));
         }
+    }
+
+    public interface Callback{
+        void onItemClick(Event event);
     }
 }

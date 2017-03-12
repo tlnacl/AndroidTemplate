@@ -1,118 +1,59 @@
-package nz.co.sush.simplelistdetail;
+package nz.co.sush.simplelistdetail.view.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-
-import com.plattysoft.leonids.ParticleSystem;
-
-import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import nz.co.sush.simplelistdetail.network.RetrofitHelper;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import nz.co.sush.simplelistdetail.R;
+import nz.co.sush.simplelistdetail.di.components.AppComponent;
 
-public class MainActivity extends AppCompatActivity
+/**
+ * Created by tomtang on 2/11/15.
+ */
+public class EventListActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.rv_events)
-    RecyclerView mRvEvents;
-    @BindView(R.id.fab)
-    FloatingActionButton mFab;
     @BindView(R.id.nav_view)
     NavigationView mNavView;
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    @BindView(R.id.progress)
-    ProgressBar mProgress;
-    @BindView(R.id.retry)
-    Button mRetry;
 
-    @BindView(R.id.particle)
-    ImageView particle;
-    private EventsAdapter mEventAdapter;
+    public static Intent getCallingIntent(Context context) {
+        return new Intent(context, EventListActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerLayout.setDrawerListener(toggle);
+        mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         mNavView.setNavigationItemSelectedListener(this);
-
-        mEventAdapter = new EventsAdapter();
-        mRvEvents.setAdapter(mEventAdapter);
-        mRvEvents.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    @OnClick(R.id.particle)
-    void onFabClick(View view){
-        doParticleAnimation();
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-    }
-
-    private void doParticleAnimation() {
-        new ParticleSystem(this,10,R.drawable.ic_menu_camera,1000)
-                .setSpeedRange(0.2f,0.5f)
-                .oneShot(particle,10);
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-//        final int testValue = mPreferences.getInt("test",0);
-//        System.out.println("testValue" + testValue);
-//        crossview(mProgress, mRvEvents);
-        RetrofitHelper.getApiAdapter().getEventList()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<Event>>() {
-                    @Override
-                    public void onCompleted() {
+    protected int getContentViewResId() {
+        return R.layout.activity_events;
+    }
 
-                    }
+    @Override
+    protected void setupComponent(AppComponent appComponent) {
 
-                    @Override
-                    public void onError(Throwable e) {
-                        //show retry
-                        crossview(mRetry, mProgress);
-                    }
-
-                    @Override
-                    public void onNext(List<Event> events) {
-                        mEventAdapter.setEvents(events);
-                        crossview(mRvEvents, mProgress);
-                    }
-                });
     }
 
     private static void crossview(View showView, View hideView) {
