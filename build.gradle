@@ -21,8 +21,8 @@ allprojects {
     }
 
     ext {
-        support_version="25.0.1"
-        retrofit_version="2.1.0"
+        support_version="25.2.0"
+        retrofit_version="2.2.0"
     }
 }
 
