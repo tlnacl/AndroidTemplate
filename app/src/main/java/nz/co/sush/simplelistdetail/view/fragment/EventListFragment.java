@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -21,6 +19,7 @@ import nz.co.sush.simplelistdetail.AndroidApplication;
 import nz.co.sush.simplelistdetail.R;
 import nz.co.sush.simplelistdetail.di.components.DaggerEventComponent;
 import nz.co.sush.simplelistdetail.network.model.Event;
+import nz.co.sush.simplelistdetail.network.model.EventResponse;
 import nz.co.sush.simplelistdetail.presentation.EventListPresenter;
 import nz.co.sush.simplelistdetail.view.EventListView;
 import nz.co.sush.simplelistdetail.view.activity.EventDetailActivity;
@@ -90,8 +89,8 @@ public class EventListFragment extends BaseFragment implements EventListView, Ev
     }
 
     @Override
-    public void renderEventList(List<Event> eventList) {
-        mEventAdapter.setEvents(eventList);
+    public void renderEventList(EventResponse eventList) {
+        mEventAdapter.setEvents(eventList.items());
     }
 
     @Override

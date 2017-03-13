@@ -38,6 +38,7 @@ public class EventListPresenter implements Presenter {
                     mEventListView.hideLoading();
                     mEventListView.showRetry();
                 }));
+
     }
 
     @Override
