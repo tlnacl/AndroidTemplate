@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public class NetworkModule {
-    private static final String END_POINT = "https://api.github.com";
+    public static String END_POINT = "https://api.github.com";
 
     @Provides
     @Singleton
